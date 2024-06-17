@@ -32,6 +32,7 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AdminTransactionComponent } from './components/admin-transaction/admin-transaction.component';
 import { AdminMembersComponent } from './components/admin-members/admin-members.component';
+import { BranchComponent } from './components/branch/branch.component';
 
 
 
@@ -52,7 +53,8 @@ import { AdminMembersComponent } from './components/admin-members/admin-members.
     BorrowConfirmationDialogComponent,
     TransactionsComponent,
     AdminTransactionComponent,
-    AdminMembersComponent
+    AdminMembersComponent,
+    BranchComponent
   ],
   imports: [
     FormsModule,

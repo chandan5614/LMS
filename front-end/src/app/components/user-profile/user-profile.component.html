@@ -3,14 +3,14 @@
   <mat-card class="box user-profile-card" *ngIf="userProfile">
     <mat-card-header>
       <div mat-card-avatar class="user-avatar"></div>
-      <mat-card-title>{{ userProfile?.username || 'Username' }}</mat-card-title>
+      <mat-card-title>{{ userProfile?.email || 'NA' }}</mat-card-title>
       <mat-card-subtitle>Member: Active</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content *ngIf="userProfile">
       <div class="user-details">
-        <p><strong>Username:</strong> {{ userProfile?.username || 'N/A' }}</p>
-        <p><strong>Email:</strong> {{ userProfile?.email || 'N/A' }}</p>
+        <p><strong>User ID:</strong> {{ userProfile?._id || 'N/A' }}</p>
+        <p><strong>Role:</strong> {{ userProfile?.role || 'N/A' }}</p>
       </div>
     </mat-card-content>
   </mat-card>

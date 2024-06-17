@@ -23,7 +23,7 @@ export class TransactionService {
 
     const userData = JSON.parse(userDataString);
     const user_id = userData.userId;
-    const url = `${this.apiUrl}/${user_id}/borrowings`;
+    const url = `${this.apiUrl}/users/${user_id}/transactions`;
     return this.http.get<Transaction[]>(url);
   }
 

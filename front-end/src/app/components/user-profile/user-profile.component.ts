@@ -24,7 +24,8 @@ export class UserProfileComponent implements OnInit {
       if (userId) {
         this.userService.getUserDetails(userId).subscribe(
           (data) => {
-            this.userProfile = data.user;
+            console.log('data', data);
+            this.userProfile = data;
           },
           (error) => {
             console.error('Error fetching user details:', error);

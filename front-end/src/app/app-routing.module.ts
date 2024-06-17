@@ -10,6 +10,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminTransactionComponent } from './components/admin-transaction/admin-transaction.component';
 import { AdminMembersComponent } from './components/admin-members/admin-members.component';
+import { BranchComponent } from './components/branch/branch.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard], data: { title: 'User Profile' } },
   { path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard], data: { title: 'User Transactions' } },
   { path: 'admin-transactions', component: AdminTransactionComponent, canActivate: [AuthGuard], data: { title: 'Transactions' } },
-  { path: 'admin-members', component: AdminMembersComponent, canActivate: [AuthGuard], data: { title: 'Members' } }
+  { path: 'admin-members', component: AdminMembersComponent, canActivate: [AuthGuard], data: { title: 'Members' } },
+  { path: 'branches', component: BranchComponent, canActivate: [AuthGuard], data: { title: 'Branches' } }
 ];
 
 @NgModule({
