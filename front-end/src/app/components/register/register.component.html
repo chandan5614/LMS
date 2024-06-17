@@ -7,24 +7,6 @@
     <form class="example-form" #registrationForm="ngForm" (ngSubmit)="registerUser(registrationForm)">
 
       <mat-card-content>
-        <!-- First Name and Last Name fields -->
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="First Name" name="first_name" ngModel required>
-          <mat-error *ngIf="registrationForm.controls.first_name?.hasError('required')">First Name is required</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Last Name" name="last_name" ngModel required>
-          <mat-error *ngIf="registrationForm.controls.last_name?.hasError('required')">Last Name is required</mat-error>
-        </mat-form-field>
-
-        <!-- Date of Birth field with date picker -->
-        <mat-form-field class="example-full-width">
-          <input matInput [matDatepicker]="dobPicker" placeholder="Date of Birth" name="dob" ngModel required>
-          <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
-          <mat-datepicker #dobPicker></mat-datepicker>
-          <mat-error *ngIf="registrationForm.controls.dob?.hasError('required')">Date of Birth is required</mat-error>
-        </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <input matInput type="email" placeholder="Email" name="email" ngModel required email>
