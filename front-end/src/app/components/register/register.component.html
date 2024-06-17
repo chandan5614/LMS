@@ -1,0 +1,60 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box" style="max-width: 30%;">
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form" #registrationForm="ngForm" (ngSubmit)="registerUser(registrationForm)">
+
+      <mat-card-content>
+        <!-- First Name and Last Name fields -->
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="First Name" name="first_name" ngModel required>
+          <mat-error *ngIf="registrationForm.controls.first_name?.hasError('required')">First Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Last Name" name="last_name" ngModel required>
+          <mat-error *ngIf="registrationForm.controls.last_name?.hasError('required')">Last Name is required</mat-error>
+        </mat-form-field>
+
+        <!-- Date of Birth field with date picker -->
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="dobPicker" placeholder="Date of Birth" name="dob" ngModel required>
+          <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dobPicker></mat-datepicker>
+          <mat-error *ngIf="registrationForm.controls.dob?.hasError('required')">Date of Birth is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="email" placeholder="Email" name="email" ngModel required email>
+          <mat-error *ngIf="registrationForm.controls.email?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="registrationForm.controls.email?.hasError('email')">Enter a valid email address</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="password" placeholder="Password" name="password" ngModel required minlength="6">
+          <mat-error *ngIf="registrationForm.controls.password?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="registrationForm.controls.password?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="example-full-width">
+          <input matInput type="password" placeholder="Confirm Password" name="confirmPassword" ngModel required>
+          <mat-error *ngIf="registrationForm.controls.confirmPassword?.hasError('required')">Confirm Password is required</mat-error>
+          <mat-error *ngIf="registrationForm.hasError('passwordMismatch')">Passwords do not match</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Choose a role...</mat-label>
+          <mat-select name="role" ngModel required>
+            <mat-option [value]="role" *ngFor="let role of Roles">{{ role }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </mat-card-content>
+
+      <button mat-stroked-button color="accent" class="btn-block" type="submit" [disabled]="!registrationForm.valid">Register</button>
+
+    </form>
+  </mat-card>
+</div>

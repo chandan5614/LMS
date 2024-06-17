@@ -1,0 +1,17 @@
+.user-avatar {
+  width: 48px;
+  /* Adjust the width and height based on your design */
+  height: 48px;
+  border-radius: 50%;
+  background: url('https://gravatar.com/avatar/466aecd14288f67b2e3d3816dd21c13a?s=400&d=identicon&r=x') center/cover;
+  /* Replace with the path to your default user image */
+  margin-right: 16px;
+  /* Adjust the margin based on your design */
+}
+
+.user-profile-card {
+  width: 95%;
+  margin-left: 20px;
+  margin-top: 10px; // Adjust the margin as needed
+  max-width: 1200px; // Set a max-width if needed
+}

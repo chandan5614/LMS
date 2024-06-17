@@ -1,0 +1,11 @@
+<!-- admin-members.component.html -->
+
+<mat-card *ngFor="let member of members" class="member-card">
+    <mat-card-header>
+      <mat-card-title>{{ member.email }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Role:</strong> {{ member.role }}</p>
+    </mat-card-content>
+  </mat-card>
+  

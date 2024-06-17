@@ -1,0 +1,9 @@
+<!-- delete-book-dialog.component.html -->
+<h2 mat-dialog-title>Delete Book</h2>
+<div mat-dialog-content>
+  <p>Are you sure you want to delete the book "{{ data.book.title }}" with ISBN {{ data.book._id }}?</p>
+</div>
+<div mat-dialog-actions style="justify-content: end;">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-button color="warn" (click)="deleteBook()">Delete</button>
+</div>

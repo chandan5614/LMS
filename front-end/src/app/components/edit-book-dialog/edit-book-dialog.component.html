@@ -1,0 +1,62 @@
+<!-- edit-book-dialog.component.html -->
+<h2 mat-dialog-title>Edit Book</h2>
+<div mat-dialog-content>
+  <!-- Edit book form fields with validation -->
+  <form #editBookForm="ngForm">
+    <mat-form-field style="width: 100%;">
+      <input disabled="true" matInput placeholder="ISBN" [(ngModel)]="editedBook.isbn" name="isbn" required />
+      <mat-error *ngIf="editBookForm.controls['isbn']?.invalid && editBookForm.controls['isbn'].touched">
+        ISBN is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Title" [(ngModel)]="editedBook.title" name="title" required />
+      <mat-error *ngIf="editBookForm.controls['title']?.invalid && editBookForm.controls['title'].touched">
+        Title is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Author" [(ngModel)]="editedBook.author" name="author" required />
+      <mat-error *ngIf="editBookForm.controls['author']?.invalid && editBookForm.controls['author'].touched">
+        Author is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Copies -->
+    <div *ngFor="let copy of editedBook.copies; let i = index" style="margin-bottom: 20px;">
+      <mat-form-field style="width: 100%;">
+        <input matInput placeholder="Branch Name" [(ngModel)]="copy.branchName" name="branchName_{{i}}" required />
+        <mat-error *ngIf="editBookForm.controls['branchName_' + i]?.invalid && editBookForm.controls['branchName_' + i].touched">
+          Branch Name is required.
+        </mat-error>
+      </mat-form-field>
+      <div *ngFor="let copyDetail of copy.copiesDetails; let j = index">
+        <mat-form-field style="width: 100%;">
+          <input matInput type="number" placeholder="Copy Number" [(ngModel)]="copyDetail.copyNumber" name="copyNumber_{{i}}_{{j}}" required />
+          <mat-error *ngIf="editBookForm.controls['copyNumber_' + i + '_' + j]?.invalid && editBookForm.controls['copyNumber_' + i + '_' + j].touched">
+            Copy Number is required.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <input matInput placeholder="Status" [(ngModel)]="copyDetail.status" name="status_{{i}}_{{j}}" required />
+          <mat-error *ngIf="editBookForm.controls['status_' + i + '_' + j]?.invalid && editBookForm.controls['status_' + i + '_' + j].touched">
+            Status is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- End Copies -->
+
+    <!-- Expand/Collapse -->
+    <mat-checkbox [(ngModel)]="editedBook.expanded" name="expanded">Expanded</mat-checkbox>
+
+    <!-- In Cart -->
+    <mat-checkbox [(ngModel)]="editedBook.inCart" name="inCart">In Cart</mat-checkbox>
+  </form>
+</div>
+<div mat-dialog-actions style="justify-content: end;">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-button color="primary" (click)="saveChanges()" [disabled]="editBookForm.invalid">Save Changes</button>
+</div>

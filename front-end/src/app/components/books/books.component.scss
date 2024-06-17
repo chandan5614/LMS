@@ -1,0 +1,32 @@
+.books-wrapper {
+
+  .box {
+    margin-top: 20px; // Adjust the margin as needed
+    width: 95%; // Set the desired width for the card
+    max-width: 1400px; // Set a max-width if needed
+    margin-left: -6%;
+
+    mat-expansion-panel {
+      margin-bottom: 10px; // Adjust the margin between expansion panels
+    }
+
+    mat-expansion-panel-header {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: space-between; // Add this line for spacing between titles
+    }
+
+    mat-panel-title {
+      padding-bottom: 10px; // Add padding between titles if needed
+    }
+
+    table {
+      width: 100%; // Make the table take the full width
+    }
+  }
+}
+/* Add this styling to your books.component.scss */
+.filter-container {
+  margin-bottom: 20px;
+}

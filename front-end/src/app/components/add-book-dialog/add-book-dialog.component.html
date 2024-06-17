@@ -1,0 +1,60 @@
+<!-- add-book-dialog.component.html -->
+<h2 mat-dialog-title>Add Book</h2>
+<div mat-dialog-content>
+    <!-- Add book form fields with validation -->
+    <form #addBookForm="ngForm" (ngSubmit)="addBook()">
+        <mat-form-field style="width: 100%;">
+            <!-- Use a template reference variable to get the input element -->
+            <input matInput #isbnInput="ngModel" placeholder="ISBN" [(ngModel)]="newBook.isbn" name="isbn"
+                (input)="formatIsbn()" pattern="\d{3}-\d{2}-\d{4}-\d{1}" required />
+            <mat-error *ngIf="addBookForm.controls['isbn']?.invalid && addBookForm.controls['isbn'].touched">
+                ISBN must have the format "123-45-6789-0".
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Title" [(ngModel)]="newBook.title" name="title" required />
+            <mat-error *ngIf="addBookForm.controls['title']?.invalid && addBookForm.controls['title'].touched">
+                Title is required.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Author" [(ngModel)]="newBook.author" name="author" required />
+            <mat-error *ngIf="addBookForm.controls['author']?.invalid && addBookForm.controls['author'].touched">
+                Author is required.
+            </mat-error>
+        </mat-form-field>
+
+        <div *ngFor="let copy of newBook.copies; let i = index" style="margin-bottom: 20px;">
+            <mat-form-field style="width: 100%;">
+                <input matInput placeholder="Branch Name" [(ngModel)]="copy.branchName" name="branchName_{{i}}" required />
+                <mat-error *ngIf="addBookForm.controls['branchName_' + i]?.invalid && addBookForm.controls['branchName_' + i].touched">
+                    Branch Name is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+                <input matInput type="number" placeholder="Copy Number" [(ngModel)]="copy.copiesDetails[0].copyNumber" name="copyNumber_{{i}}" required />
+                <mat-error *ngIf="addBookForm.controls['copyNumber_' + i]?.invalid && addBookForm.controls['copyNumber_' + i].touched">
+                    Copy Number is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;">
+                <mat-label>Status</mat-label>
+                <mat-select [(ngModel)]="copy.copiesDetails[0].status" name="status_{{i}}" required>
+                    <mat-option value="Available">Available</mat-option>
+                    <mat-option value="Borrowed">Borrowed</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addBookForm.controls['status_' + i]?.invalid && addBookForm.controls['status_' + i].touched">
+                    Status is required.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions style="justify-content: end;">
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button color="primary" type="submit" [disabled]="addBookForm.invalid">Add</button>
+</div>

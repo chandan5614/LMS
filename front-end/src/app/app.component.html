@@ -1,0 +1,15 @@
+<app-global-header *ngIf="authService.isAuthenticated()" [pageTitle]="pageTitle" [showBackButton]="showBackButton"></app-global-header>
+<!-- Your main content goes here -->
+<router-outlet></router-outlet>
+<!-- Toolbar -->
+<mat-toolbar style="background-color: #3f7cb5;" color="primary" class="app-header">
+  <div>
+    <mat-label>{{ title }}</mat-label>
+  </div>
+  <span class="nav-tool-items">
+    <button mat-button routerLink="login" *ngIf="!authService.isAuthenticated()" routerLinkActive="active">Log in</button>
+    <button mat-button mat-raised-button routerLink="register" *ngIf="!authService.isAuthenticated()" routerLinkActive="active">Register</button>
+    <button mat-button mat-raised-button  *ngIf="authService.isAuthenticated()" (click)="logout()">Logout</button>
+  </span>
+</mat-toolbar>
+<app-global-footer></app-global-footer>
