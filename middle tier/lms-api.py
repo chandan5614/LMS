@@ -107,7 +107,11 @@ def add_branch():
 
 @app.route('/branches/<branch_id>', methods=['PUT'])
 def update_branch(branch_id):
+    
     data = request.json
+    if '_id' in data:
+        data.pop('_id', None)
+    print(data)
     mongo.db.branch.update_one({'_id': ObjectId(branch_id)}, {'$set': data})
     return jsonify(message="Branch updated successfully")
 
