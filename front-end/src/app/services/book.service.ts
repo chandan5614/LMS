@@ -22,6 +22,15 @@ export class BookService {
     );
   }
   
+  getAllAvailableBooks(filter?: string): Observable<any> {
+    const url = `${this.apiUrl}/available`;
+    const params = filter ? { filter } : {};
+    return this.http.get(url, { params: params as HttpParams }).pipe(
+      tap((response) => {
+        console.log('Books - service:', response);
+      })
+    );
+  }
 
   getBookById(bookId: string): Observable<Book> {
     const url = `${this.apiUrl}/${bookId}`;

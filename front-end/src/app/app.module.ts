@@ -33,6 +33,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AdminTransactionComponent } from './components/admin-transaction/admin-transaction.component';
 import { AdminMembersComponent } from './components/admin-members/admin-members.component';
 import { BranchComponent } from './components/branch/branch.component';
+import { MemberBookComponent } from './components/member-book/member-book.component';
 
 
 
@@ -54,7 +55,8 @@ import { BranchComponent } from './components/branch/branch.component';
     TransactionsComponent,
     AdminTransactionComponent,
     AdminMembersComponent,
-    BranchComponent
+    BranchComponent,
+    MemberBookComponent
   ],
   imports: [
     FormsModule,

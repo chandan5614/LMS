@@ -41,41 +41,6 @@ export class BooksComponent implements OnInit {
       }
     });
   }
-  
-
-  borrowCopy(copy: CopyDetail): void {
-    const dialogRef = this.dialog.open(BorrowConfirmationDialogComponent, {
-      data: { copy },
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (result) => {
-        if (result === 'confirm') {
-          this.borrowBook(copy);
-          this.router.navigate(['/transactions']);
-        }
-      },
-      error: (error) => {
-        console.error('Error closing dialog:', error);
-      }
-    });
-  }
-
-  private async borrowBook(copy: any): Promise<void> {
-    try {
-      const response = await this.bookService.borrowBook(copy);
-
-      if (response) {
-        this.books = response.books;
-        this.applyPagination();
-        this.router.navigate(['/transactions']);
-      } else {
-        console.error('Failed to borrow the book.');
-      }
-    } catch (error) {
-      console.error('Error borrowing book:', error);
-    }
-  }
 
   editBook(book: Book): void {
     // Implement your edit logic here
