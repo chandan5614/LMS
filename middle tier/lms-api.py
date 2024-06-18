@@ -169,7 +169,24 @@ def delete_book(copy_id):
     mongo.db.copies.delete_one({'_id': ObjectId(copy_id)})
     return jsonify(message="Book deleted successfully")
 
-
+@app.route('/books/available', methods=['GET'])
+def get_available_copies():
+    books_doc = list(mongo.db.copies.find({'copies.copiesDetails.status': 'Available'}))
+    available_books = []
+    
+    for book in books_doc:
+        available_copies = []
+        for copy in book['copies']:
+            available_copy_details = [copy_detail for copy_detail in copy['copiesDetails'] if copy_detail['status'] == 'Available']
+            if available_copy_details:
+                copy['copiesDetails'] = available_copy_details
+                available_copies.append(copy)
+        
+        if available_copies:
+            book['copies'] = available_copies
+            available_books.append(book)
+    
+    return jsonify([json.loads(json.dumps(book, default=str)) for book in available_books]), 200
 
 
 
