@@ -16,14 +16,14 @@ export class RegisterComponent {
   registerUser(registrationForm: NgForm): void {
     console.log('registrationForm.value', registrationForm.value);
     if (registrationForm.valid) {
-      const { first_name, last_name, dob, email, password, confirmPassword, role } = registrationForm.value;
+      const { first_name, last_name, dob, email,password, confirmPassword, city,zip,phoneno,role } = registrationForm.value;
 
       if (password !== confirmPassword) {
         registrationForm.controls.confirmPassword.setErrors({ passwordMismatch: true });
         return;
       }
 
-      const registrationData = { first_name, last_name, dob, email, password, role };
+      const registrationData = { first_name, last_name, dob, email, password, city, zip, phoneno, role };
 
 
       this.registrationService.register(registrationData).subscribe(

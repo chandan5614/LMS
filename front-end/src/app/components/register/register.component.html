@@ -9,6 +9,23 @@
       <mat-card-content>
 
         <mat-form-field class="example-full-width">
+          <input matInput type="text" placeholder="First Name" name="first_name" ngModel required>
+          <mat-error *ngIf="registrationForm.controls.firstName?.hasError('required')">First Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" placeholder="Last Name" name="last_name" ngModel required>
+          <mat-error *ngIf="registrationForm.controls.lastName?.hasError('required')">Last Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="dobPicker" placeholder="Date of Birth" name="dob" ngModel required>
+          <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dobPicker></mat-datepicker>
+          <mat-error *ngIf="registrationForm.controls.dob?.hasError('required')">Date of Birth is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
           <input matInput type="email" placeholder="Email" name="email" ngModel required email>
           <mat-error *ngIf="registrationForm.controls.email?.hasError('required')">Email is required</mat-error>
           <mat-error *ngIf="registrationForm.controls.email?.hasError('email')">Enter a valid email address</mat-error>
@@ -24,6 +41,23 @@
           <input matInput type="password" placeholder="Confirm Password" name="confirmPassword" ngModel required>
           <mat-error *ngIf="registrationForm.controls.confirmPassword?.hasError('required')">Confirm Password is required</mat-error>
           <mat-error *ngIf="registrationForm.hasError('passwordMismatch')">Passwords do not match</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" placeholder="City" name="city" ngModel required>
+          <mat-error *ngIf="registrationForm.controls.city?.hasError('required')">City is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="example-full-width">
+          <input matInput type="number" placeholder="Zip Code" name="zip" ngModel required pattern="[0-9]{5}">
+          <mat-error *ngIf="registrationForm.controls.zip.hasError('required')">Zip is required</mat-error>
+          <mat-error *ngIf="registrationForm.controls.zip.hasError('pattern')">Zip must have 5 digits</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="tel" placeholder="Phone Number" name="phoneno" ngModel required pattern="[0-9]{10}">
+          <mat-error *ngIf="registrationForm.controls.phoneno.hasError('required')">Phone number is required</mat-error>
+          <mat-error *ngIf="registrationForm.controls.phoneno.hasError('pattern')">Phone number must have 10 digits</mat-error>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">

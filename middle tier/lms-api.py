@@ -30,18 +30,22 @@ def register_user():
     hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
     if role == 'Admin':
-        new_user = {
-            "email": email,
-            "password": hashed_password,
-            "role": role
-        }
+        # new_user = {
+        #     "email": email,
+        #     "password": hashed_password,
+        #     "role": role
+        # }
+        new_user= data;
+        data['password'] = hashed_password;
         mongo.db.admin.insert_one(new_user)
     elif role == 'Member':
-        new_user = {
-            "email": email,
-            "password": hashed_password,
-            "role": role
-        }
+        # new_user = {
+        #     "email": email,
+        #     "password": hashed_password,
+        #     "role": role
+        # }
+        new_user= data;
+        data['password'] = hashed_password;
         mongo.db.user.insert_one(new_user)
     else:
         return jsonify({"error": "Invalid role"}), 400

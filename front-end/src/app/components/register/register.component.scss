@@ -1,0 +1,12 @@
+.login-wrapper {
+    padding-top: 20px; /* Adjust this value as needed to prevent the top of the form from being cut off */
+    min-height: 100vh; /* Ensure the wrapper takes at least the height of the viewport */
+    display: flex;
+    align-items: center; /* This keeps the form vertically centered */
+    justify-content: center; /* This keeps the form horizontally centered */
+  }
+  
+  .box {
+    max-width: 90%; /* Adjust based on your needs, especially for mobile responsiveness */
+    margin: auto; /* This centers the box if it's smaller than the max-width */
+  }
