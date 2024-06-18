@@ -107,11 +107,7 @@ def add_branch():
 
 @app.route('/branches/<branch_id>', methods=['PUT'])
 def update_branch(branch_id):
-    
     data = request.json
-    if '_id' in data:
-        data.pop('_id', None)
-    print(data)
     mongo.db.branch.update_one({'_id': ObjectId(branch_id)}, {'$set': data})
     return jsonify(message="Branch updated successfully")
 
@@ -196,20 +192,31 @@ def get_available_copies():
 
 ############################# TRANSACTION APIS ################################
 
-@app.route('/borrow', methods=['POST'])
+@app.route('/books/borrow', methods=['POST'])
 def borrow_book():
     data = request.json
+    book_id = ObjectId(data['book_id'])
+    copy_id = data['copy_id']
     transaction = {
         "user_id": ObjectId(data['user_id']),
-        "copy_id": ObjectId(data['copy_id']),
-        "branch_id": ObjectId(data['branch_id']),
+        "book_id": book_id,
+        "copy_id": copy_id,
+        "branch_name": data['branch_id'],
         "checkout_date": datetime.datetime.utcnow(),
         "checkin_date": None,
         "late_fee": 0
     }
     mongo.db.transaction.insert_one(transaction)
-    mongo.db.copies.update_one({'_id': ObjectId(data['copy_id'])}, {'$set': {'status': 'borrowed'}})
+    
+    # Update the copy's status to 'borrowed' in the book's copiesDetails
+    mongo.db.copies.update_one(
+    {'_id': book_id, 'copies.copiesDetails.copyNumber': copy_id},
+    {'$set': {'copies.$[outer].copiesDetails.$[inner].status': 'Borrowed'}},
+    array_filters=[{'outer.branchName': data['branch_id']}, {'inner.copyNumber': copy_id}]
+    )
+    
     return jsonify(message="Book borrowed successfully"), 201
+
 
 
 @app.route('/users/<user_id>/transactions', methods=['GET'])
