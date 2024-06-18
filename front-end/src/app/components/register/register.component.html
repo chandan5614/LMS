@@ -19,7 +19,7 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput [matDatepicker]="dobPicker" placeholder="Date of Birth" name="dob" ngModel required>
+          <input matInput [matDatepicker]="dobPicker" placeholder="Date of Birth" name="dob" ngModel required [max]="maxDate">
           <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
           <mat-datepicker #dobPicker></mat-datepicker>
           <mat-error *ngIf="registrationForm.controls.dob?.hasError('required')">Date of Birth is required</mat-error>

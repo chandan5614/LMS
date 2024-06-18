@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RegistrationService } from '../../services/registration.service';
 import { Router } from '@angular/router';
@@ -8,10 +8,15 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   Roles: any = ["Admin", "Member"];
+  maxDate :Date = new Date();
   
   constructor(private registrationService: RegistrationService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
+  }
 
   registerUser(registrationForm: NgForm): void {
     console.log('registrationForm.value', registrationForm.value);
