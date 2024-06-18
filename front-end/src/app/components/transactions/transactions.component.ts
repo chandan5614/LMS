@@ -38,7 +38,7 @@ export class TransactionsComponent implements OnInit {
             _id: transaction._id,
             user_id: transaction.user_id,
             copy_id: transaction.copy_id,
-            branch_id: transaction.branch_id,
+            branch_id: transaction.branch_name,
             checkout_date: new Date(transaction.checkout_date),
             checkin_date: transaction.checkin_date ? new Date(transaction.checkin_date) : null,
             late_fee: transaction.late_fee,

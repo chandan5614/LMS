@@ -1,7 +1,7 @@
 // book.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { Book, Copy } from '../models/book.model';
 
 @Injectable({
@@ -57,35 +57,9 @@ export class BookService {
     return this.http.get<Book[]>(url);
   }
 
-  borrowBook(copy: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const userDataString: string | null = localStorage.getItem('userData');
-  
-      if (userDataString === null) {
-        reject('User data not found in localStorage');
-        return;
-      }
-  
-      const userData = JSON.parse(userDataString);
-      const user_id = userData.userId;
-  
-      if (!user_id) {
-        reject('User ID not found in localStorage');
-        return;
-      }
-  
-      // Assuming you have an API endpoint for borrowing a book
-      this.http.post(`${this.apiUrl}/${copy.copy_id}/borrow`, { user_id })
-        .subscribe(
-          (response: any) => {
-            resolve(response);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
-  }
+  borrowBook(transaction: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/borrow`, transaction);
+  }  
 
   checkoutBooks(books: Book[]): Observable<any> {
     // Customize the API endpoint and payload according to your server implementation

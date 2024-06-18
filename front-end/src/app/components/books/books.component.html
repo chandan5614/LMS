@@ -1,12 +1,6 @@
 <div class="books-wrapper" fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
   <mat-card class="box" style="width: 100%;">
     <mat-accordion>
-      <div class="static-header" style="width: 100%; display: flex; justify-content: space-around; padding: 18px; box-sizing: border-box; align-items: start;">
-        <div><strong>ID</strong></div>
-        <div><strong>Title</strong></div>
-        <div><strong>Author</strong></div>
-        <div><strong>ISBN</strong></div>
-      </div>
       <mat-expansion-panel *ngFor="let book of pagedBooks" style="width: 100%;" (opened)="panelOpenState = book._id"
         [expanded]="panelOpenState === book._id">
         <mat-expansion-panel-header style="width: 100%; padding-top: 18px; align-items: normal;">
