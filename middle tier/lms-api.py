@@ -225,25 +225,35 @@ def borrow_book():
     return jsonify(message="Book borrowed successfully"), 201
 
 
+@app.route('/books/return', methods=['POST'])
+def return_book():
+    data = request.json
+    transaction_id = ObjectId(data['_id'])
+    book_id = ObjectId(data['book_id'])
+    copy_id = data['copy_id']
+    branch_name = data['branch_id']
+
+    # Update the transaction with the return date
+    mongo.db.transaction.update_one(
+        {'_id': transaction_id},
+        {'$set': {'checkin_date': datetime.datetime.utcnow()}}
+    )
+    
+    # Update the copy's status to 'Available'
+    mongo.db.copies.update_one(
+        {'_id': book_id, 'copies.copiesDetails.copyNumber': copy_id},
+        {'$set': {'copies.$[outer].copiesDetails.$[inner].status': 'Available'}},
+        array_filters=[{'outer.branchName': branch_name}, {'inner.copyNumber': copy_id}]
+    )
+    
+    return jsonify(message="Book returned successfully"), 200
+
 
 @app.route('/users/<user_id>/transactions', methods=['GET'])
 def get_user_transactions(user_id):
     transactions_doc = list(mongo.db.transaction.find({'user_id': ObjectId(user_id)}))
     transactions = [json.loads(json.dumps(transaction, default=str)) for transaction in transactions_doc]
     return jsonify(transactions), 200
-
-@app.route('/return/<transaction_id>', methods=['PUT'])
-def return_book(transaction_id):
-    transaction = mongo.db.transaction.find_one({'_id': ObjectId(transaction_id)})
-    checkin_date = datetime.datetime.utcnow()
-    borrow_period = (checkin_date - transaction['checkout_date']).days
-    late_fee = max(0, borrow_period - 7)
-    mongo.db.transaction.update_one(
-        {'_id': ObjectId(transaction_id)},
-        {'$set': {'checkin_date': checkin_date, 'late_fee': late_fee}}
-    )
-    mongo.db.copies.update_one({'_id': ObjectId(transaction['copy_id'])}, {'$set': {'status': 'available'}})
-    return jsonify(message="Book returned successfully"), 200
 
 
 @app.route('/transactions', methods=['GET'])

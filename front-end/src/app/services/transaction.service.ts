@@ -31,6 +31,4 @@ export class TransactionService {
     const url = `${this.apiUrl}/transactions`;
     return this.http.get<Transaction[]>(url);
   }
-
-  // Add other transaction-related methods as needed
 }

@@ -4,7 +4,6 @@ export interface User {
   email: string;
   password: string;
   dob: Date;
-  city: string;
   zip: number;
   phoneno: number;
   role: string;

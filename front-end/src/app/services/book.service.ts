@@ -59,25 +59,9 @@ export class BookService {
 
   borrowBook(transaction: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/borrow`, transaction);
-  }  
-
-  checkoutBooks(books: Book[]): Observable<any> {
-    // Customize the API endpoint and payload according to your server implementation
-    const checkoutUrl = `${this.apiUrl}/checkout`;
-
-    // Assuming your server expects an array of book IDs
-    const bookIds = books.map((book) => book._id);
-
-    return this.http.post(checkoutUrl, { bookIds });
   }
-  
-  borrowBooks(books: Book[]): Observable<any> {
-    // Customize the API endpoint and payload according to your server implementation
-    const borrowUrl = `${this.apiUrl}/borrow`;
 
-    // Assuming your server expects an array of book IDs
-    const bookIds = books.map((book) => book._id);
-
-    return this.http.post(borrowUrl, { bookIds });
+  returnBook(transaction: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/return`, transaction);
   }
 }

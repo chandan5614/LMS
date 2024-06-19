@@ -19,6 +19,12 @@
       <td mat-cell *matCellDef="let transaction">{{ transaction.copy_id }}</td>
     </ng-container>
 
+    <!-- Copy ID Column -->
+    <ng-container matColumnDef="bookId">
+      <th mat-header-cell *matHeaderCellDef>Book ID</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.book_id }}</td>
+    </ng-container>
+
     <!-- Branch ID Column -->
     <ng-container matColumnDef="branchId">
       <th mat-header-cell *matHeaderCellDef>Branch</th>
@@ -28,13 +34,15 @@
     <!-- Checkout Date Column -->
     <ng-container matColumnDef="checkoutDate">
       <th mat-header-cell *matHeaderCellDef>Checkout Date</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.checkout_date }}</td>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.checkout_date | date:'shortDate' }}</td>
     </ng-container>
 
     <!-- Checkin Date Column -->
     <ng-container matColumnDef="checkinDate">
       <th mat-header-cell *matHeaderCellDef>Checkin Date</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.checkin_date ? (transaction.checkin_date) : 'Not returned' }}</td>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.checkin_date ? (transaction.checkin_date | date:'shortDate') : 'Not returned' }}
+      </td>
     </ng-container>
 
     <!-- Late Fee Column -->
@@ -47,12 +55,12 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let transaction">
-        <!-- Add any actions you want for each transaction -->
+        <button *ngIf="!transaction.checkin_date" mat-button (click)="returnBook(transaction)">Return</button>
       </td>
     </ng-container>
 
     <!-- Define the displayed columns -->
-    <tr mat-header-row *matHeaderRowDef="['transactionId', 'userId', 'copyId', 'branchId', 'checkoutDate', 'checkinDate', 'lateFee', 'actions']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['transactionId', 'userId', 'copyId', 'branchId', 'checkoutDate', 'checkinDate', 'lateFee', 'actions']"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>

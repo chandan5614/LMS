@@ -42,11 +42,6 @@
           <mat-error *ngIf="registrationForm.controls.confirmPassword?.hasError('required')">Confirm Password is required</mat-error>
           <mat-error *ngIf="registrationForm.hasError('passwordMismatch')">Passwords do not match</mat-error>
         </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <input matInput type="text" placeholder="City" name="city" ngModel required>
-          <mat-error *ngIf="registrationForm.controls.city?.hasError('required')">City is required</mat-error>
-        </mat-form-field>
         
         <mat-form-field class="example-full-width">
           <input matInput type="number" placeholder="Zip Code" name="zip" ngModel required pattern="[0-9]{5}">
