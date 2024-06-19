@@ -37,11 +37,7 @@ The Library Management System database is designed to manage the diverse and int
 - **Branch to Copy:** One branch can have multiple copies (One-to-Many).
 - **Branch to Transaction:** One branch can be involved in multiple transactions (One-to-Many).
 
-### 3. Database Diagram
-
-![Database Diagram](attachment:/mnt/data/Screenshot%202024-06-19%20at%2012.18.21%20AM.png)
-
-### 4. Data Dictionary
+### 3. Data Dictionary
 
 | Collection | Field        | Type       | Description                               |
 |------------|--------------|------------|-------------------------------------------|
@@ -69,7 +65,7 @@ The Library Management System database is designed to manage the diverse and int
 |            | checkout_date| Date       | Date the book was checked out             |
 |            | late_fee     | Number     | Late fee incurred, if any                 |
 
-### 5. Sample Data
+### 4. Sample Data
 
 **Admin:**
 ```json
@@ -134,15 +130,7 @@ The Library Management System database is designed to manage the diverse and int
 }
 ```
 
-### 6. User Interfaces and Forms
-
-(Here you can include screenshots or descriptions of the user interfaces and forms in your application, showing how users and librarians interact with the system. Provide images and brief explanations for each key screen.)
-
-### 7. Source Codes
-
-(Include the source code files for your project, ensuring to organize them properly. You can either provide links to a GitHub repository or include the code snippets in the report directly.)
-
-### 8. NoSQL Commands
+### 5. NoSQL Commands
 
 **Retrieving Branch Information for a Copy:**
 ```javascript
@@ -157,6 +145,15 @@ db.transactions.find({ user_id: ObjectId("666bcd155eef3cb4c036f1ab") });
 **Managing Book Copies Across Branches:**
 ```javascript
 db.copies.find({ branch_id: ObjectId("666bcf16eb3ce9a67fe300ce") });
+```
+
+**Borrow a copy:**
+```javascript
+db.copies.update_one(
+    {'_id': book_id, 'copies.copiesDetails.copyNumber': copy_id},
+    {'$set': {'copies.$[outer].copiesDetails.$[inner].status': 'Borrowed'}},
+    array_filters=[{'outer.branchName': data['branch_id']}, {'inner.copyNumber': copy_id}]
+    );
 ```
 
 ### Conclusion
