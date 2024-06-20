@@ -18,10 +18,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { GlobalHeaderComponent } from './components/global-header/global-header.component';
 import { GlobalFooterComponent } from './components/global-footer/global-footer.component';
 import { AddBookDialogComponent } from './components/add-book-dialog/add-book-dialog.component';
-import { EditBookDialogComponent } from './components/edit-book-dialog/edit-book-dialog.component';
 import { DeleteBookDialogComponent } from './components/delete-book-dialog/delete-book-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { BorrowConfirmationDialogComponent } from './components/borrow-confirmation-dialog/borrow-confirmation-dialog.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -49,9 +47,7 @@ import { MemberBookComponent } from './components/member-book/member-book.compon
     GlobalFooterComponent,
     AdminDashboardComponent,
     AddBookDialogComponent,
-    EditBookDialogComponent,
     DeleteBookDialogComponent,
-    BorrowConfirmationDialogComponent,
     TransactionsComponent,
     AdminTransactionComponent,
     AdminMembersComponent,

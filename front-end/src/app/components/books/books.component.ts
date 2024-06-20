@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Book, CopyDetail } from "../../models/book.model";
 import { BookService } from "../../services/book.service";
 import { MatDialog } from "@angular/material/dialog";
-import { BorrowConfirmationDialogComponent } from "../borrow-confirmation-dialog/borrow-confirmation-dialog.component";
 import { Router } from "@angular/router";
 import { AddBookDialogComponent } from "../add-book-dialog/add-book-dialog.component";
 
@@ -65,7 +64,14 @@ export class BooksComponent implements OnInit {
   }
 
   deleteBook(bookId: string): void {
-    // Implement your delete logic here
+    this.bookService.deleteBook(bookId).subscribe({
+      next: () => {
+        this.books = this.books.filter((book) => book._id !== bookId);
+      },
+      error: (error) => {
+        console.error("Error deleting book:", error);
+      },
+    });
   }
 
   onPageChange(event: any): void {
