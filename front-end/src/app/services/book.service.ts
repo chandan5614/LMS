@@ -41,6 +41,10 @@ export class BookService {
     return this.http.post<any>(this.apiUrl, book);
   }
 
+  addCopyToBook(bookId: string, copy: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${bookId}/add_copy`, copy);
+  }
+
   updateBook(book: any): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
   }

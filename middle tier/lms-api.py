@@ -198,6 +198,42 @@ def get_available_copies():
     return jsonify([json.loads(json.dumps(book, default=str)) for book in available_books]), 200
 
 
+@app.route('/books/<book_id>/add_copy', methods=['POST'])
+def add_copy(book_id):
+    data = request.json
+    branch_name = data.get('branchName')
+    copy_detail = data.get('copyDetail')
+    
+    if not branch_name or not copy_detail:
+        return jsonify(message="Branch name and copy detail are required"), 400
+
+    book = mongo.db.copies.find_one({'_id': ObjectId(book_id)})
+    if not book:
+        return jsonify(message="Book not found"), 404
+
+    # Flag to check if branch is found
+    branch_found = False
+    
+    for copy in book.get('copies', []):
+        if copy['branchName'] == branch_name:
+            copy['copiesDetails'].append(copy_detail)
+            branch_found = True
+            break
+
+    # If branch was not found, create a new entry
+    if not branch_found:
+        new_copy = {
+            'branchName': branch_name,
+            'copiesDetails': [copy_detail]
+        }
+        print(new_copy)
+        book['copies'].append(new_copy)
+
+    mongo.db.copies.update_one({'_id': ObjectId(book_id)}, {'$set': book})
+    return jsonify(message="Copy added successfully"), 200
+
+
+
 
 ############################# TRANSACTION APIS ################################
 

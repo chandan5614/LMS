@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Add New Copy</h1>
+<div mat-dialog-content>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Branch Name</mat-label>
+    <mat-select placeholder="Branch Name" [(ngModel)]="copy.branchName" name="branchName" required>
+      <mat-option *ngFor="let branch of branches" [value]="branch.name">{{ branch.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Copy Number</mat-label>
+    <input matInput [(ngModel)]="copy.copyDetail.copyNumber">
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="copy.copyDetail.status">
+      <mat-option value="Available">Available</mat-option>
+      <mat-option value="Borrowed">Borrowed</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onAdd()">Add</button>
+</div>

@@ -32,6 +32,7 @@ import { AdminTransactionComponent } from './components/admin-transaction/admin-
 import { AdminMembersComponent } from './components/admin-members/admin-members.component';
 import { BranchComponent } from './components/branch/branch.component';
 import { MemberBookComponent } from './components/member-book/member-book.component';
+import { AddCopyDialogComponent } from './components/add-copy-dialog/add-copy-dialog.component';
 
 
 
@@ -52,7 +53,8 @@ import { MemberBookComponent } from './components/member-book/member-book.compon
     AdminTransactionComponent,
     AdminMembersComponent,
     BranchComponent,
-    MemberBookComponent
+    MemberBookComponent,
+    AddCopyDialogComponent
   ],
   imports: [
     FormsModule,

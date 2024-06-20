@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Book, CopyDetail } from "../../models/book.model";
+import { Book, Copy, CopyDetail } from "../../models/book.model";
 import { BookService } from "../../services/book.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AddBookDialogComponent } from "../add-book-dialog/add-book-dialog.component";
+import { AddCopyDialogComponent } from "../add-copy-dialog/add-copy-dialog.component";
 
 @Component({
   selector: "app-books",
@@ -61,6 +62,38 @@ export class BooksComponent implements OnInit {
 
   editBook(book: Book): void {
     // Implement your edit logic here
+  }
+
+  openAddCopyDialog(book: Book): void {
+    const dialogRef = this.dialog.open(AddCopyDialogComponent, {
+      width: "50%",
+      height: "50%",
+      data: { book: book } // Pass the bookId here
+    });
+
+    dialogRef.afterClosed().subscribe((copy) => {
+      if (copy) {
+        console.log('dialog data', copy);
+        this.addCopyToBook(book._id, copy);
+      }
+    });
+  }
+
+  addCopyToBook(bookId: string, copy: any): void {
+    this.bookService.addCopyToBook(bookId, copy).subscribe({
+      next: (updatedBook: Book) => {
+        console.log(copy);
+        const index = this.books.findIndex((book) => book._id === bookId);
+        if (index !== -1) {
+          console.log('updatedBook', updatedBook);
+          this.books[index] = updatedBook;
+          this.loadBooks();
+        }
+      },
+      error: (error) => {
+        console.error("Error adding copy to book:", error);
+      },
+    });
   }
 
   deleteBook(bookId: string): void {
