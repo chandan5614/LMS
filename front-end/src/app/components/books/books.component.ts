@@ -1,24 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { Book, CopyDetail } from '../../models/book.model';
-import { BookService } from '../../services/book.service';
-import { MatDialog } from '@angular/material/dialog';
-import { BorrowConfirmationDialogComponent } from '../borrow-confirmation-dialog/borrow-confirmation-dialog.component';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Book, CopyDetail } from "../../models/book.model";
+import { BookService } from "../../services/book.service";
+import { MatDialog } from "@angular/material/dialog";
+import { BorrowConfirmationDialogComponent } from "../borrow-confirmation-dialog/borrow-confirmation-dialog.component";
+import { Router } from "@angular/router";
+import { AddBookDialogComponent } from "../add-book-dialog/add-book-dialog.component";
 
 @Component({
-  selector: 'app-books',
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.scss'],
+  selector: "app-books",
+  templateUrl: "./books.component.html",
+  styleUrls: ["./books.component.scss"],
 })
 export class BooksComponent implements OnInit {
   books: Book[] = [];
   panelOpenState: string | null = null;
-  locationFilter: string = '';
+  locationFilter: string = "";
   pageIndex: number = 0;
   pageSize: number = 5;
   pagedBooks: Book[] = [];
 
-  constructor(private bookService: BookService, public dialog: MatDialog, private router: Router) {}
+  constructor(
+    private bookService: BookService,
+    public dialog: MatDialog,
+    private router: Router
+  ) {}
+
+  openAddBookDialog(): void {
+    const dialogRef = this.dialog.open(AddBookDialogComponent, {
+      width: "50%",
+      height: "75%",
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadBooks(); // Reload books if a new book was added
+      }
+    });
+  }
 
   ngOnInit() {
     this.loadBooks();
@@ -33,12 +51,12 @@ export class BooksComponent implements OnInit {
         } else {
           // No data
           this.books = [];
-          console.log('No books found.');
+          console.log("No books found.");
         }
       },
       error: (error) => {
-        console.error('Error fetching books:', error);
-      }
+        console.error("Error fetching books:", error);
+      },
     });
   }
 

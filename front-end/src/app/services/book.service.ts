@@ -38,23 +38,16 @@ export class BookService {
   }
 
   addBook(book: any): Observable<Book> {
-    const url = `http://127.0.0.1:8080/admin/books`;
-    return this.http.post<any>(url, book);
+    return this.http.post<any>(this.apiUrl, book);
   }
 
   updateBook(book: any): Observable<Book> {
-    const url = `http://127.0.0.1:8080/admin/books`;
-    return this.http.post<Book>(url, book);
+    return this.http.post<Book>(this.apiUrl, book);
   }
 
   deleteBook(bookId: string): Observable<void> {
-    const url = `http://127.0.0.1:8080/admin/books/${bookId}`;
+    const url = `http://127.0.0.1:8080/books/${bookId}`;
     return this.http.delete<void>(url);
-  }
-
-  getAllLibraries(): Observable<any> {
-    const url = `http://127.0.0.1:8080/libraries/all`;
-    return this.http.get<Book[]>(url);
   }
 
   borrowBook(transaction: any): Observable<any> {

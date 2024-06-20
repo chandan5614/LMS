@@ -12,6 +12,7 @@ import { AdminTransactionComponent } from './components/admin-transaction/admin-
 import { AdminMembersComponent } from './components/admin-members/admin-members.component';
 import { BranchComponent } from './components/branch/branch.component';
 import { MemberBookComponent } from './components/member-book/member-book.component';
+import { AddBookDialogComponent } from './components/add-book-dialog/add-book-dialog.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'admin-transactions', component: AdminTransactionComponent, canActivate: [AuthGuard], data: { title: 'Transactions' } },
   { path: 'admin-members', component: AdminMembersComponent, canActivate: [AuthGuard], data: { title: 'Members' } },
   { path: 'branches', component: BranchComponent, canActivate: [AuthGuard], data: { title: 'Branches' } },
-  { path: 'member-books', component: MemberBookComponent, canActivate: [AuthGuard], data: { title: 'Books' } }
+  { path: 'member-books', component: MemberBookComponent, canActivate: [AuthGuard], data: { title: 'Books' } },
+  { path: 'add-book', component: AddBookDialogComponent, canActivate: [AuthGuard], data: { title: 'Add Book' } }
 ];
 
 @NgModule({

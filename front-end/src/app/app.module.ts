@@ -75,7 +75,7 @@ import { MemberBookComponent } from './components/member-book/member-book.compon
     MatSortModule,
     MatTableModule,
     CommonModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

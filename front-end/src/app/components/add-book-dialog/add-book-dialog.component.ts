@@ -1,9 +1,9 @@
-// add-book-dialog.component.ts
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { Book, Copy, CopyDetail } from '../../models/book.model';
+import { BranchService } from 'src/app/services/branch.service';
 
 @Component({
   selector: 'app-add-book-dialog',
@@ -11,35 +11,30 @@ import { Book, Copy, CopyDetail } from '../../models/book.model';
   styleUrls: ['./add-book-dialog.component.scss'],
 })
 export class AddBookDialogComponent implements AfterViewInit {
-  newBook: Book = {
-    _id: '',
+  newBook: Omit<Book, '_id'> = {
     title: '',
     author: '',
     isbn: '',
     copies: [{ branchName: '', copiesDetails: [{ copyNumber: 0, status: '' }] }],
   };
+  branches: any[] = []; // Array to hold branches
 
-  // Use ! to tell TypeScript that addBookForm will be initialized
   @ViewChild('addBookForm') addBookForm!: NgForm;
 
   constructor(
     public dialogRef: MatDialogRef<AddBookDialogComponent>,
-    private bookService: BookService
+    private bookService: BookService,
+    private branchService: BranchService
   ) {}
 
   ngAfterViewInit() {
-    // Fetch branches when the form is initialized
     this.fetchBranches();
   }
 
   fetchBranches() {
-    // Call the library service to fetch branches
-    this.bookService.getAllLibraries().subscribe(
+    this.branchService.getBranches().subscribe(
       (response: any) => {
-        this.newBook.copies = response.libraries.map((branch: any) => ({
-          branchName: branch.name,
-          copiesDetails: [{ copyNumber: 0, status: '' }],
-        }));
+        this.branches = response; // Assuming response is an array of branches
       },
       (error) => {
         console.error('Error fetching branches:', error);
@@ -47,41 +42,27 @@ export class AddBookDialogComponent implements AfterViewInit {
     );
   }
 
-  formatIsbn() {
-    // Remove existing hyphens and format ISBN with hyphens
-    this.newBook.isbn = this.newBook.isbn.replace(/-/g, '');
-    if (this.newBook.isbn.length >= 3) {
-      this.newBook.isbn =
-        this.newBook.isbn.substring(0, 3) +
-        '-' +
-        this.newBook.isbn.substring(3);
-    }
-    if (this.newBook.isbn.length >= 6) {
-      this.newBook.isbn =
-        this.newBook.isbn.substring(0, 6) +
-        '-' +
-        this.newBook.isbn.substring(6);
-    }
-    if (this.newBook.isbn.length >= 11) {
-      this.newBook.isbn =
-        this.newBook.isbn.substring(0, 11) +
-        '-' +
-        this.newBook.isbn.substring(11);
-    }
-    // Limit the ISBN length to 13 characters
-    this.newBook.isbn = this.newBook.isbn.substring(0, 13);
+  addBranch() {
+    this.newBook.copies.push({ branchName: '', copiesDetails: [{ copyNumber: 0, status: '' }] });
+  }
+
+  addCopyDetail(index: number) {
+    this.newBook.copies[index].copiesDetails.push({ copyNumber: 0, status: '' });
+  }
+
+  removeCopyDetail(branchIndex: number, copyIndex: number) {
+    this.newBook.copies[branchIndex].copiesDetails.splice(copyIndex, 1);
   }
 
   addBook() {
-    // Check if the form is valid before proceeding
     if (this.addBookForm && this.addBookForm.valid) {
       this.bookService.addBook(this.newBook).subscribe(
         (addedBook: Book) => {
-          this.dialogRef.close(true); // Close the dialog with a success signal
+          this.dialogRef.close(true);
         },
         (error) => {
           console.error('Error adding book:', error);
-          this.dialogRef.close(false); // Close the dialog with a failure signal
+          this.dialogRef.close(false);
         }
       );
     }

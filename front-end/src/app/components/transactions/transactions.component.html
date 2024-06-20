@@ -55,7 +55,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let transaction">
-        <button *ngIf="!transaction.checkin_date" mat-button (click)="returnBook(transaction)">Return</button>
+        <button style="background-color: lavender;" *ngIf="!transaction.checkin_date" mat-button (click)="returnBook(transaction)">Return</button>
       </td>
     </ng-container>
 

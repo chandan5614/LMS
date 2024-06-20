@@ -130,14 +130,16 @@ def get_branch(branch_id):
     branch_json = json.loads(json.dumps(branch, default=str))
     return jsonify(branch_json), 200
 
-
+@app.route('/branches/<branch_id>', methods=['DELETE'])
+def delete_branch(branch_id):
+    mongo.db.branch.delete_one({'_id': ObjectId(branch_id)})
+    return jsonify(message="Branch deleted successfully")
 
 ############################# BOOK APIS ################################
 
 @app.route('/books', methods=['POST'])
 def add_book():
     data = request.json
-    data['branch_id'] = ObjectId(data['branch_id'])
     mongo.db.copies.insert_one(data)
     return jsonify(message="Book added successfully"), 201
 
