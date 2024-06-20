@@ -145,7 +145,7 @@ def add_book():
 
 @app.route('/books', methods=['GET'])
 def get_books():
-    books_doc = list(mongo.db.copies.find())
+    books_doc = list(mongo.db.copies.find().sort("title", 1))
     books = [json.loads(json.dumps(book, default=str)) for book in books_doc]
     return jsonify(books), 200
 
@@ -180,7 +180,7 @@ def delete_book(copy_id):
 
 @app.route('/books/available', methods=['GET'])
 def get_available_copies():
-    books_doc = list(mongo.db.copies.find({'copies.copiesDetails.status': 'Available'}))
+    books_doc = list(mongo.db.copies.find({'copies.copiesDetails.status': 'Available'}).sort("title", 1))
     available_books = []
     
     for book in books_doc:

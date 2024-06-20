@@ -67,6 +67,7 @@ export class BooksComponent implements OnInit {
     this.bookService.deleteBook(bookId).subscribe({
       next: () => {
         this.books = this.books.filter((book) => book._id !== bookId);
+        this.pagedBooks = this.pagedBooks.filter((book) => book._id !== bookId);
       },
       error: (error) => {
         console.error("Error deleting book:", error);
